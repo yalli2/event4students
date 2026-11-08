@@ -1,15 +1,20 @@
-# Event4Students · 중고등학생 대회·캠프 탐색기
+# Event4Students · Global youth competitions, camps & programs
 
-국내외 중·고등학생이 참여할 수 있는 경시대회·공모전·캠프·국제교류 프로그램을 검색하고 준비활동을 관리하는 인터랙티브 사이트입니다.
+An interactive directory of competitions, olympiads, science fairs, camps and exchange programmes for students aged 11–19 worldwide.
 
-- **검색·필터**: 학년(중1~고3) · 국내/국외 · 지역 · 진행방식 · 분야 · 난이도 · 사전 요구사항(필요한 것 / 없는 것만) · 접수 월
-- **빠른 보기**: 중학생 · 고등학생 · 3개월 내 접수 · 참가비 없음 · 온라인 참여
-- **홈**: 곧 접수하는 행사 슬라이드, 행사일정, 분야별 바로가기, 접수 임박 소식
-- **접수 캘린더**: 이번 달부터 12개월간 접수·진행 시기 한눈에 보기
-- **준비 로드맵**: 학년별 연간 계획 + 분야별 공통 준비활동
-- **관심 목록**: ★ 표시한 행사와 준비 체크리스트 진행률 (브라우저에 저장)
+**Languages:** 한국어 · English · Español · 日本語 · 中文 · Français (switch at top right, or add `?lang=xx` to the URL). Event details are written in Korean and English; other languages show the English text.
 
-## 데이터 수정
-행사 정보는 `data.js`의 `EVENTS` 배열에 있습니다. 항목을 추가·수정하면 사이트에 바로 반영됩니다.
+## Features
+- **Filters:** country/region, age (11–19), field, format, difficulty, requirements (require / exclude), application month
+- **Quick views:** ages 11–14, 15–19, opening in 3 months, no fee, online, international
+- **Home:** featured events slider, schedule panel, browse by field, by country, by age
+- **Calendar:** application and event months for the next 12 months
+- **Roadmap:** year plans by age group + common preparation by field
+- **My list:** ★ saved events with preparation checklists (stored in the browser only)
 
-> 2026년 11월 조사 기준이며 일정은 '예년 기준'입니다. 지원 전 반드시 공식 공고를 확인하세요.
+## Data
+- `events_a.js` — Korea-focused and major international events (ko/en)
+- `events_b.js` — global olympiads, national fairs and programmes by country (ko/en)
+- `i18n.js` — interface translations (6 languages)
+
+Compiled in November 2026. Schedules follow typical annual patterns — always check the official announcement before applying.

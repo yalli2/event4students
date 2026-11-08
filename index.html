@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Event4Students · 중고등학생 대회·캠프·외부활동 정보</title>
-<meta name="description" content="국내외 중·고등학생 경시대회, 공모전, 캠프, 국제교류 프로그램을 학년·지역·분야·난이도·사전요구사항별로 찾고 준비활동까지 관리하세요.">
-<meta property="og:title" content="Event4Students · 중고등학생 대회·캠프 정보">
-<meta property="og:description" content="국내외 중고등학생 대회·캠프·국제교류를 한곳에서 찾고 준비하세요.">
+<title>Event4Students · Global youth competitions, camps & programs</title>
+<meta name="description" content="Find competitions, olympiads, science fairs, camps and exchange programs for students aged 11–19 worldwide — by country, age, field and difficulty, in 6 languages.">
+<meta property="og:title" content="Event4Students · Global youth competitions & camps">
+<meta property="og:description" content="Competitions, olympiads, camps and exchanges for teens worldwide — by country, age and field.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#E5194B">
+<link rel="alternate" hreflang="ko" href="?lang=ko"><link rel="alternate" hreflang="en" href="?lang=en"><link rel="alternate" hreflang="es" href="?lang=es"><link rel="alternate" hreflang="ja" href="?lang=ja"><link rel="alternate" hreflang="zh" href="?lang=zh"><link rel="alternate" hreflang="fr" href="?lang=fr">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23E5194B'/%3E%3Ctext x='32' y='44' font-size='34' font-family='Arial' font-weight='700' fill='white' text-anchor='middle'%3E4%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
+
 :root{
   --red:#E5194B; --red-d:#B80F38; --red-soft:#FDECF0;
   --lime:#C8E23C; --lime-d:#9DB51E;
@@ -27,12 +29,13 @@ button{font:inherit}
 .skip{position:absolute;left:-9999px}.skip:focus{left:10px;top:10px;background:#000;color:#fff;padding:8px 12px;z-index:999}
 .inner{max-width:var(--w);margin:0 auto;padding:0 24px}
 /* ===== Utility bar ===== */
-.util{background:var(--red);color:#fff;font-size:13px}
+.util{background:var(--red);color:#fff;font-size:13px;position:relative;z-index:60}
 .util .inner{display:flex;align-items:center;justify-content:space-between;height:40px;gap:12px}
 .util nav{display:flex;height:100%;overflow-x:auto}
 .util nav a{display:flex;align-items:center;padding:0 14px;height:100%;white-space:nowrap;font-weight:500;cursor:pointer}
 .util nav a:hover,.util nav a.on{background:var(--red-d)}
-.util .r{display:flex;gap:14px;opacity:.9;white-space:nowrap}
+.util .r{display:flex;gap:14px;white-space:nowrap}
+#today{opacity:.85}
 /* ===== Header / GNB ===== */
 header.gnb{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40}
 header.gnb .inner{display:flex;align-items:center;height:76px;gap:28px}
@@ -249,7 +252,7 @@ footer .flogo b{color:var(--red)}
   .hsearch{display:none}
 }
 @media (max-width:860px){
-  .util .r{display:none}
+  .hide-m{display:none}
   header.gnb .inner{height:64px;gap:12px}
   .mtoggle{display:block}
   .menu{display:none;position:absolute;top:64px;left:0;right:0;background:#fff;flex-direction:column;border-bottom:2px solid var(--ink);gap:0}
@@ -273,344 +276,50 @@ footer .flogo b{color:var(--red)}
   section.blk{padding:44px 0}
   .tiles{grid-template-columns:1fr 1fr}.tile{min-height:140px;padding:22px}
 }
+
+.lang{position:relative;height:100%}
+.lang>button{height:100%;border:0;background:var(--red-d);color:#fff;padding:0 16px;cursor:pointer;font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.lang ul{display:none;position:absolute;right:0;top:100%;background:#fff;color:var(--ink);list-style:none;margin:0;padding:6px 0;min-width:170px;box-shadow:0 12px 30px rgba(0,0,0,.18);z-index:90;border-top:3px solid var(--red)}
+.lang.open ul{display:block}
+.lang li button{width:100%;text-align:left;border:0;background:none;padding:10px 18px;cursor:pointer;font-size:14px;display:flex;justify-content:space-between;gap:10px}
+.lang li button:hover{background:var(--bg)}
+.lang li button.on{color:var(--red);font-weight:700}
+.lang li small{color:#999}
+.util .r{align-items:center;height:100%}
+.flag{font-size:15px;margin-right:4px}
+.ccount{display:flex;flex-wrap:wrap;gap:8px}
+.cc{border:1px solid var(--line);padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:10px;background:#fff;font-size:14.5px;font-weight:600;transition:.15s}
+.cc:hover{border-color:var(--ink)}
+.cc b{color:var(--red);font-weight:800}
+.fallback{font-size:12.5px;color:var(--sub);background:var(--bg);padding:8px 12px;margin-bottom:14px}
+select.cselect{width:100%}
 </style>
 </head>
 <body>
-<a class="skip" href="#content">본문 바로가기</a>
-
+<a class="skip" href="#content" data-i="skip">Skip to content</a>
 <div class="util">
   <div class="inner">
-    <nav id="utilNav">
-      <a data-scope="domestic">국내 대회·캠프</a>
-      <a data-scope="intl">해외 대회·프로그램</a>
-      <a data-field="수학">수학·과학</a>
-      <a data-field="정보·AI">정보·AI</a>
-      <a data-field="글쓰기·논술">글쓰기</a>
-      <a data-field="봉사·국제교류">국제교류·봉사</a>
-    </nav>
-    <div class="r"><span id="today"></span><span>|</span><span>2026.11 업데이트</span></div>
+    <nav id="utilNav"></nav>
+    <div class="r"><span id="today" class="hide-m"></span>
+      <div class="lang" id="lang"><button id="langBtn" aria-haspopup="true" aria-expanded="false">🌐 <span id="langName">English</span> ▾</button><ul id="langList" role="menu"></ul></div>
+    </div>
   </div>
 </div>
-
 <header class="gnb">
   <div class="inner">
-    <div class="logo" data-go="home">
-      <span class="mark">Event<b>4</b>Students</span>
-      <span class="txt"><strong>청소년 외부활동 안내</strong>Competitions · Camps · Programs</span>
-    </div>
-    <nav class="menu" id="menu">
-      <button data-t="home">홈</button>
-      <button data-t="list">행사 찾기</button>
-      <button data-t="cal">접수 캘린더</button>
-      <button data-t="road">준비 로드맵</button>
-      <button data-t="fav">관심 목록 <span id="favN"></span></button>
-    </nav>
-    <form class="hsearch" id="hsearch" role="search"><input id="hq" placeholder="대회·캠프 검색" aria-label="검색"><button aria-label="검색">🔍</button></form>
-    <button class="mtoggle" id="mtoggle" aria-label="메뉴">☰</button>
+    <div class="logo" data-go="home"><span class="mark">Event<b>4</b>Students</span><span class="txt"><strong data-i="tagline"></strong>Competitions · Camps · Programs</span></div>
+    <nav class="menu" id="menu"></nav>
+    <form class="hsearch" id="hsearch" role="search"><input id="hq" aria-label="search"><button aria-label="search">🔍</button></form>
+    <button class="mtoggle" id="mtoggle" aria-label="menu">☰</button>
   </div>
 </header>
-
 <main id="content"></main>
-
-<footer>
-  <div class="inner">
-    <div class="links"><a data-go="home">홈</a><a data-go="list">행사 찾기</a><a data-go="cal">접수 캘린더</a><a data-go="road">준비 로드맵</a></div>
-    <div class="flex">
-      <div>
-        <p style="margin:0 0 6px">본 사이트는 국내외 중·고등학생 대상 대회·캠프·프로그램 정보를 모아 안내하는 비영리 정보 서비스입니다.</p>
-        <p style="margin:0 0 6px">일정·자격은 2026년 11월 조사 기준(예년 기준 포함)이며 해마다 바뀔 수 있습니다. 지원 전 반드시 각 기관의 공식 공고를 확인하세요.</p>
-        <p style="margin:0">관심 목록·체크리스트는 이용자의 브라우저에만 저장되며 서버로 전송되지 않습니다. · 운영 다인에듀</p>
-      </div>
-      <div class="flogo">Event<b>4</b>Students</div>
-    </div>
-  </div>
-</footer>
-
+<footer><div class="inner" id="foot"></div></footer>
 <div class="mbg" id="mbg" role="dialog" aria-modal="true"><div class="modal" id="modal"></div></div>
-<button class="totop" id="totop" aria-label="맨 위로">TOP</button>
-
-<script src="data.js"></script>
-<script>
-const GR={m1:"중1",m2:"중2",m3:"중3",h1:"고1",h2:"고2",h3:"고3"};
-const LV={1:"입문",2:"중급",3:"심화",4:"최상위"};
-const PRE={"없음":"누구나","선발시험":"선발·예선 시험","코딩능력":"코딩 능력","팀구성":"팀 구성","지도교사":"지도교사·코치","학교추천":"학교·기관 추천","작품·연구":"작품·연구물","외국어능력":"영어·외국어","참가비":"참가비·비용","여권":"여권·해외 이동","나이제한":"만 나이 제한","거주지":"거주지 제한"};
-const MONTHS=[1,2,3,4,5,6,7,8,9,10,11,12];
-const NOW=new Date(),CUR=NOW.getMonth()+1;
-document.getElementById('today').textContent=`오늘 ${NOW.getFullYear()}.${String(CUR).padStart(2,'0')}.${String(NOW.getDate()).padStart(2,'0')}`;
-const store={get(k,d){try{const v=localStorage.getItem('e4s_'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('e4s_'+k,JSON.stringify(v))}catch(e){}}};
-let favs=store.get('favs',[]),checks=store.get('checks',{});
-const OPTS={
-  grade:Object.keys(GR).map(k=>[k,GR[k]]),
-  scope:[["domestic","국내"],["intl","국외"]],
-  region:[...new Set(EVENTS.map(e=>e.region))].sort().map(r=>[r,r]),
-  mode:[["온라인","온라인"],["오프라인","오프라인"],["온·오프라인","온·오프라인"]],
-  field:[...new Set(EVENTS.flatMap(e=>e.fields))].map(f=>[f,f]),
-  level:[1,2,3,4].map(l=>[String(l),LV[l]]),
-  prereq:Object.keys(PRE).map(k=>[k,PRE[k]]),
-  month:MONTHS.map(m=>[String(m),m+"월"])
-};
-const FKEYS=['grade','scope','region','mode','field','level','prereq','month'];
-const FLABEL={grade:"학년",scope:"국내 / 국외",region:"지역",mode:"진행 방식",field:"분야",level:"난이도",prereq:"사전 요구사항",month:"접수 시기"};
-const S={q:"",preMode:"need",sort:"due",tab:"home",preset:"all",rmField:"all",soon:false};
-FKEYS.forEach(k=>S[k]=new Set());
-
-const ICON={
- "수학":'<path d="M4 6h16M4 12h10M4 18h7"/><path d="M17 15l4 4M21 15l-4 4"/>',
- "과학":'<path d="M9 3h6M10 3v6L4 19a1.5 1.5 0 0 0 1.3 2h13.4A1.5 1.5 0 0 0 20 19l-6-10V3"/><path d="M7 14h10"/>',
- "정보·AI":'<rect x="3" y="4" width="18" height="12"/><path d="M8 20h8M12 16v4M8 9l-2 1.5L8 12M16 9l2 1.5-2 1.5"/>',
- "발명·공학":'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/>',
- "글쓰기·논술":'<path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/>',
- "토론·리더십":'<path d="M4 5h12v8H9l-4 3v-3H4z"/><path d="M16 9h4v8h-1v3l-4-3h-4v-2"/>',
- "경제·창업":'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
- "봉사·국제교류":'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/>',
- "진로·캠프":'<path d="M3 20L12 4l9 16H3z"/><path d="M12 20v-6"/>',
- "intl":'<path d="M2 16l20-6-3-3-6 2-6-5-2 1 4 6-5 2-2-1-1 1z"/><path d="M3 21h18"/>'
-};
-const svg=k=>`<svg viewBox="0 0 24 24" aria-hidden="true">${ICON[k]||ICON["진로·캠프"]}</svg>`;
-
-/* ---------- helpers ---------- */
-function match(e,f,set){
-  if(!set.size)return true;
-  switch(f){
-    case'grade':return e.grades.some(g=>set.has(g));
-    case'scope':return set.has(e.scope);
-    case'region':return set.has(e.region);
-    case'mode':return set.has(e.mode);
-    case'field':return e.fields.some(x=>set.has(x));
-    case'level':return set.has(String(e.level));
-    case'month':return e.applyMonths.some(m=>set.has(String(m)));
-    case'prereq':return S.preMode==='ex'?!e.prereq.some(p=>set.has(p)):[...set].every(p=>e.prereq.includes(p));
-  }
-}
-const until=e=>e.applyMonths.length?Math.min(...e.applyMonths.map(m=>(m-CUR+12)%12)):99;
-const mName=d=>(CUR+d-1)%12+1;
-function filtered(){
-  const q=S.q.trim().toLowerCase();
-  let l=EVENTS.filter(e=>{
-    for(const f of FKEYS)if(!match(e,f,S[f]))return false;
-    if(S.soon&&until(e)>3)return false;
-    if(q&&!(e.name+e.en+e.host+e.desc+e.fields.join()+e.region+e.schedule).toLowerCase().includes(q))return false;
-    return true});
-  const s=S.sort;
-  l.sort((a,b)=>s==='due'?until(a)-until(b)||a.level-b.level:s==='lvA'?a.level-b.level:s==='lvD'?b.level-a.level:a.name.localeCompare(b.name,'ko'));
-  return l;
-}
-function dueInfo(e){
-  if(e.applyMonths.length===12)return['상시 접수','now'];
-  const d=until(e);
-  if(d===0)return['이번 달 접수','now'];
-  if(d<=2)return[`${d}개월 후 · ${mName(d)}월 접수`,'hot'];
-  return[`다음 접수 ${mName(d)}월경`,''];
-}
-function gRange(g){const a=Object.keys(GR),i=g.map(x=>a.indexOf(x)).sort((x,y)=>x-y);const c=i.every((v,k)=>!k||v===i[k-1]+1);return c&&i.length>1?`${GR[a[i[0]]]}~${GR[a[i[i.length-1]]]}`:g.map(x=>GR[x]).join('·')}
-const linkOf=e=>e.url||`https://www.google.com/search?q=${encodeURIComponent(e.name.replace(/\(.*?\)/g,'')+' 공고')}`;
-
-function card(e,extra=''){
-  const[dl,dc]=dueInfo(e);
-  return`<article class="card ${e.scope}" data-id="${e.id}" tabindex="0">
-   <button class="star ${favs.includes(e.id)?'on':''}" data-star="${e.id}" aria-label="관심 목록">★</button>
-   <div class="top"><span class="s">${e.scope==='domestic'?'국내':'국외'}</span><span class="l">· ${e.fields.join(' · ')}</span></div>
-   <h4>${e.name}</h4><div class="en">${e.en}</div>
-   <div class="desc">${e.desc}</div>
-   <div class="tags"><span class="lvb lv${e.level}">${LV[e.level]}</span><span class="tg">${gRange(e.grades)}</span><span class="tg">${e.mode}</span><span class="tg">${e.region}</span></div>
-   ${extra}
-   <div class="due ${dc}"><span class="dl">${dl}</span><span class="go">자세히 →</span></div>
-  </article>`;
-}
-
-/* ---------- views ---------- */
-function homeView(){
-  const soon=EVENTS.filter(e=>e.applyMonths.length<12&&until(e)<=2).sort((a,b)=>until(a)-until(b)||b.level-a.level);
-  const feat=soon.filter(e=>e.level>=2).slice(0,5);
-  const list=soon.slice(0,6);
-  const dom=EVENTS.filter(e=>e.scope==='domestic').length,intl=EVENTS.length-dom;
-  const midN=EVENTS.filter(e=>e.grades.some(g=>g[0]==='m')).length,hiN=EVENTS.filter(e=>e.grades.some(g=>g[0]==='h')).length;
-  const tiles=[
-   ["수학","수학·과학 올림피아드","KMO·KJSO·과학전람회",{field:["수학","과학"]},""],
-   ["정보·AI","정보·AI·코딩","KOI·코드페어·USACO",{field:["정보·AI"]},"red"],
-   ["글쓰기·논술","글쓰기·에세이","문학상·John Locke",{field:["글쓰기·논술"]},""],
-   ["토론·리더십","토론·리더십","모의유엔·WSC",{field:["토론·리더십"]},""],
-   ["경제·창업","경제·창업","비즈쿨·Conrad",{field:["경제·창업"]},""],
-   ["봉사·국제교류","국제교류·봉사","청소년교류·성취포상제",{field:["봉사·국제교류"]},""],
-   ["진로·캠프","캠프·진로체험","우주캠프·전공체험",{field:["진로·캠프"]},""],
-   ["intl","해외 여름 프로그램","YYGS·RSI·SSP",{scope:["intl"],field:["진로·캠프","과학","수학"]},"dark"]
-  ];
-  return `
-  <section class="hero">
-    <div class="hero-l">
-      <small>FOR MIDDLE &amp; HIGH SCHOOLERS</small>
-      <h1>활동으로 넓히는 세상,<br><em>너의 다음 무대</em>를<br>찾아봐</h1>
-      <p>국내외 경시대회·공모전·캠프·국제교류를 학년·분야·난이도별로 찾고, 준비 체크리스트로 차근차근 도전하세요.</p>
-      <div class="stats"><div><b>${EVENTS.length}</b>등록 행사</div><div><b>${dom}</b>국내</div><div><b>${intl}</b>국외</div></div>
-    </div>
-    <div class="slider">
-      <div class="lab"><h2><span>주목</span> 곧 접수하는 행사</h2>
-        <div class="ctrl" id="sctrl">${feat.map((_,i)=>`<button class="dot ${i?'':'on'}" data-i="${i}" aria-label="${i+1}번 슬라이드"></button>`).join('')}
-        <button class="ic" id="sPlay" aria-label="정지">❚❚</button></div></div>
-      ${feat.map((e,i)=>`<div class="slide" data-id="${e.id}" style="${i?'display:none':''}">
-        <span class="tag">${dueInfo(e)[0]}</span>
-        <h3>${e.name}</h3><div class="en">${e.en}</div>
-        <p>${e.desc}</p>
-        <div class="meta"><span>대상 <b>${gRange(e.grades)}</b></span><span>난이도 <b>${LV[e.level]}</b></span><span>${e.scope==='domestic'?'국내':'국외'} · ${e.mode}</span></div>
-        <span class="num">0${i+1}</span></div>`).join('')}
-    </div>
-    <div class="sched">
-      <h2>행사일정 <a data-go="cal">전체보기</a></h2>
-      <div class="m">${CUR}월 ~ ${mName(2)}월 접수 예정</div>
-      <ul>${list.map(e=>`<li data-id="${e.id}"><div class="t">${e.name}</div><div class="d"><span class="dd">${until(e)===0?'NOW':'D-'+until(e)+'M'}</span>${e.applyMonths.filter(m=>(m-CUR+12)%12<=2).map(m=>m+'월').join('·')} 접수 · ${gRange(e.grades)}</div></li>`).join('')}</ul>
-    </div>
-  </section>
-
-  <section class="blk"><div class="inner">
-    <div class="blk-h"><div><h2>분야별 바로가기</h2><p>관심 분야를 고르면 해당 행사만 모아 보여드려요.</p></div><a class="more" data-go="list">전체 행사 보기</a></div>
-    <div class="tiles">${tiles.map(([ic,t,c,f,cls],i)=>`<div class="tile ${cls}" data-tile="${i}"><span class="arrow">↗</span>${svg(ic)}<h3>${t}</h3><span class="tc">${c}</span></div>`).join('')}</div>
-  </div></section>
-
-  <section class="blk" style="padding-top:0"><div class="inner">
-    <div class="blk-h"><div><h2>학교급별로 찾기</h2><p>학년에 맞는 행사만 골라 보세요.</p></div></div>
-    <div class="split">
-      <div class="lvl" data-level="m"><div class="big">중학생</div><div><h3>중학생 — 탐색과 기초</h3><p>입문·중급 대회와 캠프로 첫 성공 경험을 만드는 시기 · <span class="n">${midN}개</span> 행사</p></div></div>
-      <div class="lvl h" data-level="h"><div class="big">고등학생</div><div><h3>고등학생 — 집중과 심화</h3><p>관심 분야의 깊이를 보여주는 대회·연구·해외 프로그램 · <span class="n">${hiN}개</span> 행사</p></div></div>
-    </div>
-  </div></section>
-
-  <section class="blk" style="padding-top:0"><div class="inner">
-    <div class="blk-h"><div><h2>접수 임박 소식</h2><p>이번 달부터 3개월 안에 접수가 열리는 행사입니다.</p></div><a class="more" data-preset="soon">더보기</a></div>
-    <div class="board">${EVENTS.filter(e=>e.applyMonths.length<12&&until(e)<=3).sort((a,b)=>until(a)-until(b)).slice(0,8).map(e=>`
-      <div class="row" data-id="${e.id}"><span class="cat ${e.scope==='intl'?'i':''}">${e.scope==='domestic'?'국내':'국외'}</span><span class="tt">${e.name}</span><span class="sm">${e.host.length>14?e.host.slice(0,14)+'…':e.host}</span><span class="sm">${dueInfo(e)[0]}</span></div>`).join('')}</div>
-  </div></section>
-
-  <section class="blk guide"><div class="inner">
-    <div class="blk-h"><div><h2>이렇게 이용하세요</h2><p>찾고, 담고, 준비하고, 도전하기</p></div></div>
-    <div class="steps">
-      <div class="step"><h3>조건으로 찾기</h3><p>학년·지역·분야·난이도·사전 요구사항을 조합해 나에게 맞는 행사를 찾아요.</p></div>
-      <div class="step"><h3>관심 목록에 담기</h3><p>카드의 ★를 눌러 관심 행사를 모아 두면 언제든 다시 볼 수 있어요.</p></div>
-      <div class="step"><h3>준비 체크리스트</h3><p>행사마다 시기별 준비활동을 체크하며 진행률을 확인해요.</p></div>
-      <div class="step"><h3>공식 공고 확인</h3><p>올해 요강·마감일은 공식 사이트에서 꼭 확인한 뒤 지원하세요.</p></div>
-    </div>
-  </div></section>`;
-}
-function head(sm,t,p,quick=true){
-  return`<div class="pagehead"><div class="inner"><div class="crumb">홈 › ${t}</div><small>${sm}</small><h1>${t}</h1><p>${p}</p>
-  ${quick?`<div class="quick" id="quick">${[["all","전체"],["mid","중학생"],["high","고등학생"],["soon","3개월 내 접수"],["free","참가비 없음"],["online","온라인 참여"]].map(([k,l])=>`<button data-preset="${k}" class="${S.preset===k?'on':''}">${l}</button>`).join('')}</div>`:''}
-  </div></div>`;
-}
-function filtersHTML(){
-  return`<aside class="filters" id="filters"><div class="fh">상세 검색 <button id="reset">초기화 ↺</button></div>
-  <div class="fg"><input class="fsearch" id="q" placeholder="대회명·주최·키워드" value="${S.q.replace(/"/g,'&quot;')}"></div>
-  ${FKEYS.map(f=>`<div class="fg"><h4>${FLABEL[f]}</h4>${f==='prereq'?`<div class="seg" id="preMode"><button data-m="need" class="${S.preMode==='need'?'on':''}">이 조건이 필요한</button><button data-m="ex" class="${S.preMode==='ex'?'on':''}">이 조건이 없는 것만</button></div>`:''}
-   <div class="chips" data-f="${f}">${OPTS[f].map(([v,l])=>`<button class="chip ${f==='prereq'&&S.preMode==='ex'?'ex':''} ${S[f].has(v)?'on':''}" data-v="${v}">${l}<span class="c">${EVENTS.filter(e=>match(e,f,new Set([v]))).length}</span></button>`).join('')}</div></div>`).join('')}
-  </aside>`;
-}
-function toolbar(n,label){
-  return`<div class="toolbar"><div class="count">총 <b>${n}</b>개 ${label}</div><div style="display:flex;gap:8px"><button class="ftbtn" id="ftbtn">필터</button>
-  <select id="sort" aria-label="정렬"><option value="due">접수 임박순</option><option value="lvA">난이도 낮은순</option><option value="lvD">난이도 높은순</option><option value="name">이름순</option></select></div></div>`;
-}
-function listView(){const l=filtered();
-  return head("EXPLORE","행사 찾기","조건을 조합해 나에게 맞는 대회·캠프·프로그램을 찾아보세요.")+
-  `<div class="inner layout">${filtersHTML()}<div>${toolbar(l.length,'행사')}${l.length?`<div class="grid">${l.map(e=>card(e)).join('')}</div>`:`<div class="empty">조건에 맞는 행사가 없습니다. 필터를 줄여 보세요.</div>`}</div></div>`}
-function calView(){const l=filtered(),ord=MONTHS.map((_,i)=>(CUR-1+i)%12+1);
-  return head("CALENDAR","접수 캘린더","이번 달부터 12개월 동안의 접수·진행 시기를 한눈에 확인하세요.")+
-  `<div class="inner layout">${filtersHTML()}<div>${toolbar(l.length,'행사')}
-  <div class="legend"><span><i class="ca"></i>접수·신청</span><span><i class="ce"></i>대회·캠프 진행</span><span>행사명을 누르면 상세 정보가 열립니다</span></div>
-  <div class="cal"><table><thead><tr><th style="text-align:left">행사명</th>${ord.map(m=>`<th class="${m===CUR?'cur':''}">${m}월</th>`).join('')}</tr></thead><tbody>
-  ${l.map(e=>`<tr><td class="name" data-id="${e.id}">${favs.includes(e.id)?'★ ':''}${e.name}</td>${ord.map(m=>{const a=e.applyMonths.includes(m),v=e.eventMonths.includes(m);return`<td class="${a&&v?'cae':a?'ca':v?'ce':''}"></td>`}).join('')}</tr>`).join('')}
-  </tbody></table></div></div></div>`}
-function roadView(){const f=S.rmField,fs=Object.keys(ROADMAPS);
-  return head("ROADMAP","준비 로드맵","학교급별 연간 계획과 분야별 공통 준비활동을 안내합니다.",false)+
-  `<div class="inner" style="padding-top:34px;padding-bottom:70px">
-   <div class="note">새 학년(3월)이 되면 대상 학년과 '만 나이' 기준이 함께 바뀝니다. 지원 전에 자격 요건을 꼭 확인하세요.</div>
-   <div class="stage"><div class="sh"><h3>중학생</h3><p>탐색과 기초 — 여러 분야를 가볍게 경험하며 흥미를 찾는 시기</p></div>
-    <div class="tl"><div><b>11~1월</b>대학부설 영재교육원 선발 · 겨울 우주캠프 · AMC 8 · USACO Bronze</div><div><b>3~6월</b>KJSO(만 15세 이하) · 발명아이디어 경진대회 · 성취포상제 시작</div><div><b>7~8월</b>여름 캠프·봉사 · 코드페어·WRO 등 팀 대회 경험</div><div><b>9~10월</b>World Scholar's Cup · 모의유엔 입문 · 관심 분야 좁히기</div></div></div>
-   <div class="stage h"><div class="sh"><h3>고등학생</h3><p>집중과 심화 — 관심 분야 1~2개에서 '깊이'를 보여주는 시기</p></div>
-    <div class="tl"><div><b>11~1월</b>YYGS·RSI·SSP 등 여름 해외 프로그램 지원 · AMC 10/12 · 겨울 전공체험</div><div><b>2~4월</b>John Locke 등록 · KMO·올림피아드 접수 · 국가간·지자체 교류 모집</div><div><b>5~8월</b>올림피아드 1차 · 대산청소년문학상 · 코드페어 · 여름 캠프·교류</div><div><b>9~10월</b>AI·SW 공모전 · 경제한마당 · 다음 해 연구 주제 확정</div></div></div>
-   <div class="blk-h" style="margin-top:44px"><div><h2>분야별 공통 준비활동</h2><p>어떤 대회를 준비하든 도움이 되는 기본기입니다.</p></div>
-   <select id="rmField" aria-label="분야 선택"><option value="all">전체 분야</option>${fs.map(x=>`<option ${x===f?'selected':''}>${x}</option>`).join('')}</select></div>
-   <div class="rm-grid">${fs.filter(x=>f==='all'||x===f).map(x=>`<div class="rm"><h4>${x}<span>관련 행사 ${EVENTS.filter(e=>e.fields.includes(x)).length}개</span></h4><ol>${ROADMAPS[x].map(s=>`<li>${s}</li>`).join('')}</ol><button data-gofield="${x}">이 분야 행사 보기 →</button></div>`).join('')}</div>
-  </div>`}
-function favView(){const l=EVENTS.filter(e=>favs.includes(e.id));
-  return head("MY LIST","관심 목록","★로 담은 행사와 준비 진행률을 확인하세요. (이 브라우저에만 저장됩니다)",false)+
-  `<div class="inner" style="padding-top:30px;padding-bottom:70px">${l.length?`${toolbar(l.length,'관심 행사')}<div class="grid">${l.map(e=>{const c=checks[e.id]||[],n=c.filter(Boolean).length,p=Math.round(n/e.prep.length*100);
-   return card(e,`<div style="font-size:12.5px;color:var(--sub)">준비활동 ${n}/${e.prep.length} · ${p}%<div class="prog" style="margin:6px 0 0"><div style="width:${p}%"></div></div></div>`)}).join('')}</div>`:`<div class="empty">아직 관심 행사가 없습니다.<br>행사 카드의 ★를 눌러 담아 보세요.<br><br><button class="btn p" data-go="list">행사 찾으러 가기</button></div>`}</div>`}
-
-/* ---------- render ---------- */
-let slideTimer=null;
-function render(scrollTop){
-  const m=document.getElementById('content');
-  clearInterval(slideTimer);
-  m.innerHTML={home:homeView,list:listView,cal:calView,road:roadView,fav:favView}[S.tab]();
-  document.querySelectorAll('#menu button').forEach(b=>b.classList.toggle('on',b.dataset.t===S.tab));
-  document.getElementById('favN').textContent=favs.length?`(${favs.length})`:'';
-  const so=document.getElementById('sort');if(so){so.value=S.sort;so.onchange=()=>{S.sort=so.value;render()}}
-  const q=document.getElementById('q');if(q){q.oninput=()=>{S.q=q.value;clearTimeout(q._t);q._t=setTimeout(()=>{render();const n=document.getElementById('q');n.focus();n.setSelectionRange(n.value.length,n.value.length)},250)}}
-  const rf=document.getElementById('rmField');if(rf)rf.onchange=()=>{S.rmField=rf.value;render()};
-  if(S.tab==='home')startSlider();
-  if(scrollTop)window.scrollTo({top:0});
-}
-function startSlider(){
-  const slides=[...document.querySelectorAll('.slide')],dots=[...document.querySelectorAll('#sctrl .dot')],pb=document.getElementById('sPlay');
-  if(!slides.length)return;let i=0,play=true;
-  const show=n=>{i=(n+slides.length)%slides.length;slides.forEach((s,k)=>s.style.display=k===i?'':'none');dots.forEach((d,k)=>d.classList.toggle('on',k===i))};
-  const run=()=>{clearInterval(slideTimer);if(play)slideTimer=setInterval(()=>show(i+1),5000)};
-  dots.forEach(d=>d.onclick=e=>{e.stopPropagation();show(+d.dataset.i);run()});
-  pb.onclick=e=>{e.stopPropagation();play=!play;pb.textContent=play?'❚❚':'▶';pb.setAttribute('aria-label',play?'정지':'재생');run()};
-  run();
-}
-function resetF(){FKEYS.forEach(k=>S[k].clear());S.q='';S.soon=false;S.preset='all'}
-function applyPreset(p){resetF();S.preset=p;
-  if(p==='mid')['m1','m2','m3'].forEach(g=>S.grade.add(g));
-  if(p==='high')['h1','h2','h3'].forEach(g=>S.grade.add(g));
-  if(p==='soon')S.soon=true;
-  if(p==='free'){S.preMode='ex';S.prereq.add('참가비')}
-  if(p==='online')S.mode.add('온라인');
-}
-function go(tab){S.tab=tab;document.getElementById('menu').classList.remove('open');render(true)}
-
-/* ---------- modal ---------- */
-function openModal(id){
-  const e=EVENTS.find(x=>x.id===id);if(!e)return;const c=checks[e.id]||[];
-  document.getElementById('modal').innerHTML=`
-  <div class="mhead ${e.scope==='domestic'?'dom':''}"><button class="close" id="mclose" aria-label="닫기">✕</button>
-   <small>${e.scope==='domestic'?'국내':'국외'} · ${e.fields.join(' · ')} · 난이도 ${LV[e.level]}</small><h2>${e.name}</h2><div class="en">${e.en}</div></div>
-  <div class="mbody"><p style="margin:0;font-size:15px">${e.desc}</p>
-   <dl class="kv"><dt>주최·주관</dt><dd>${e.host}</dd><dt>대상 학년</dt><dd>${e.grades.map(g=>GR[g]).join(', ')}</dd><dt>지역·방식</dt><dd>${e.region} · ${e.mode}</dd><dt>일정</dt><dd>${e.schedule}</dd><dt>접수 시기</dt><dd>${e.applyMonths.length===12?'연중 상시':e.applyMonths.map(m=>m+'월').join(', ')}</dd><dt>비용</dt><dd>${e.cost}</dd><dt>사전 요구</dt><dd>${e.prereq.map(p=>PRE[p]).join(' · ')}</dd><dt>다음 단계</dt><dd>${e.next}</dd></dl>
-   <div class="sec"><h3>준비활동 체크리스트 <span id="pc" style="font-size:13px;color:var(--red)"></span></h3><div class="prog"><div id="pbar"></div></div>
-    <ul class="prep">${e.prep.map((p,i)=>`<li class="${c[i]?'done':''}"><input type="checkbox" id="pp${i}" data-i="${i}" ${c[i]?'checked':''}><label class="w" for="pp${i}">${p.when}</label><label class="t" for="pp${i}">${p.task}</label></li>`).join('')}</ul></div>
-   <div class="warn">⚠ 일정·자격은 예년 기준 정보입니다. 지원 전 공식 공고에서 올해 요강을 꼭 확인하세요.</div>
-   <div class="acts"><a class="btn p" href="${linkOf(e)}" target="_blank" rel="noopener">${e.url?'공식 사이트 바로가기 ↗':'최신 공고 검색 ↗'}</a><button class="btn s" id="mfav">${favs.includes(e.id)?'★ 관심 해제':'☆ 관심 목록에 담기'}</button></div>
-  </div>`;
-  const upd=()=>{const n=(checks[e.id]||[]).filter(Boolean).length;document.getElementById('pc').textContent=`${n} / ${e.prep.length}`;document.getElementById('pbar').style.width=(n/e.prep.length*100)+'%'};upd();
-  document.querySelectorAll('.prep input').forEach(cb=>cb.onchange=()=>{const a=checks[e.id]||[];a[+cb.dataset.i]=cb.checked;checks[e.id]=a;store.set('checks',checks);cb.closest('li').classList.toggle('done',cb.checked);upd()});
-  document.getElementById('mfav').onclick=()=>{toggleFav(e.id);openModal(e.id)};
-  document.getElementById('mclose').onclick=closeModal;
-  document.getElementById('mbg').classList.add('open');document.body.style.overflow='hidden';
-}
-function closeModal(){document.getElementById('mbg').classList.remove('open');document.body.style.overflow='';const y=scrollY;render();window.scrollTo(0,y)}
-function toggleFav(id){favs=favs.includes(id)?favs.filter(x=>x!==id):[...favs,id];store.set('favs',favs)}
-
-/* ---------- events ---------- */
-document.addEventListener('click',ev=>{
-  const t=ev.target;
-  const star=t.closest('[data-star]');if(star){ev.stopPropagation();toggleFav(star.dataset.star);const y=scrollY;render();scrollTo(0,y);return}
-  const chip=t.closest('.chips .chip');if(chip){const f=chip.parentElement.dataset.f,v=chip.dataset.v;S[f].has(v)?S[f].delete(v):S[f].add(v);S.preset='';const y=scrollY;render();scrollTo(0,y);return}
-  const pm=t.closest('#preMode button');if(pm){S.preMode=pm.dataset.m;render();return}
-  if(t.closest('#reset')){resetF();render();return}
-  if(t.closest('#ftbtn')){document.getElementById('filters').classList.toggle('show');return}
-  const pr=t.closest('[data-preset]');if(pr){applyPreset(pr.dataset.preset);if(S.tab==='home'||S.tab==='road'||S.tab==='fav')S.tab='list';render(S.tab!=='list'||!document.getElementById('quick'));return}
-  const tile=t.closest('[data-tile]');if(tile){const tl=[["수학","과학"],["정보·AI"],["글쓰기·논술"],["토론·리더십"],["경제·창업"],["봉사·국제교류"],["진로·캠프"],null][+tile.dataset.tile];resetF();S.preset='';if(tl)tl.forEach(f=>S.field.add(f));else{S.scope.add('intl');S.field.add('진로·캠프')}go('list');return}
-  const lv=t.closest('[data-level]');if(lv){applyPreset(lv.dataset.level==='m'?'mid':'high');go('list');return}
-  const gf=t.closest('[data-gofield]');if(gf){resetF();S.preset='';S.field.add(gf.dataset.gofield);go('list');return}
-  const ut=t.closest('#utilNav a');if(ut){resetF();S.preset='';if(ut.dataset.scope)S.scope.add(ut.dataset.scope);if(ut.dataset.field){S.field.add(ut.dataset.field);if(ut.dataset.field==='수학')S.field.add('과학')}go('list');return}
-  const g=t.closest('[data-go]');if(g){go(g.dataset.go);return}
-  const mt=t.closest('#menu button');if(mt){go(mt.dataset.t);return}
-  if(t.closest('#mtoggle')){document.getElementById('menu').classList.toggle('open');return}
-  if(t.id==='mbg'){closeModal();return}
-  const c=t.closest('[data-id]');if(c&&!t.closest('#modal')){openModal(c.dataset.id)}
-});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('mbg').classList.contains('open'))closeModal();if(e.key==='Enter'&&e.target.matches('.card'))openModal(e.target.dataset.id)});
-document.getElementById('hsearch').onsubmit=e=>{e.preventDefault();resetF();S.q=document.getElementById('hq').value;go('list')};
-const tt=document.getElementById('totop');window.addEventListener('scroll',()=>tt.style.display=scrollY>500?'block':'none');tt.onclick=()=>scrollTo({top:0,behavior:'smooth'});
-render();
-</script>
+<button class="totop" id="totop" aria-label="top">TOP</button>
+<script src="events_a.js"></script>
+<script src="events_b.js"></script>
+<script src="i18n.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
