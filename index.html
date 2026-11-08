@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Event4Students · 중고등학생 대회·캠프 탐색기</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --bg:#f6f5f1; --panel:#fff; --ink:#1d2433; --sub:#5d6677; --line:#e3e1da;
+  --brand:#1f4fd1; --brand-soft:#e8eefc; --accent:#ff7a3d; --ok:#11845b; --ok-soft:#e3f4ec;
+  --warn:#b45309; --warn-soft:#fdf1e2; --radius:14px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+a{color:var(--brand)}
+header{background:linear-gradient(135deg,#14306f,#1f4fd1 60%,#3d6ef0);color:#fff;padding:28px 24px 22px}
+.wrap{max-width:1280px;margin:0 auto}
+header h1{margin:0;font-size:26px;letter-spacing:-.5px}
+header h1 span{color:#ffc79f}
+header p{margin:6px 0 16px;opacity:.85;font-size:14px}
+.presets{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.presets button{border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.12);color:#fff;border-radius:999px;padding:8px 16px;font:inherit;font-size:14px;cursor:pointer}
+.presets button.on{background:#fff;color:#14306f;font-weight:700}
+.presets .note{font-size:12px;opacity:.75;margin-left:4px}
+nav.tabs{display:flex;gap:4px;overflow-x:auto;white-space:nowrap;max-width:1280px;margin:0 auto;padding:0 24px;position:relative;top:-1px}
+nav.tabs button{border:0;background:transparent;padding:14px 18px;font:inherit;font-size:15px;color:var(--sub);cursor:pointer;border-bottom:3px solid transparent}
+nav.tabs button.on{color:var(--ink);font-weight:700;border-color:var(--brand)}
+.tabbar{background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+main{max-width:1280px;margin:0 auto;padding:20px 24px 60px;display:grid;grid-template-columns:290px 1fr;gap:20px}
+main.full{grid-template-columns:1fr}
+aside{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;height:fit-content;position:sticky;top:64px;max-height:calc(100vh - 80px);overflow:auto}
+aside h3{font-size:13px;color:var(--sub);margin:16px 0 8px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+aside h3:first-child{margin-top:0}
+.search{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 11px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink)}
+.chip.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.chip.ex.on{background:#c2410c;border-color:#c2410c}
+.mini{font-size:11px;font-weight:400;color:var(--sub)}
+.seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:8px}
+.seg button{flex:1;border:0;background:#fff;padding:6px;font:inherit;font-size:12px;cursor:pointer;color:var(--sub)}
+.seg button.on{background:var(--ink);color:#fff}
+.reset{width:100%;margin-top:16px;padding:9px;border:1px dashed var(--line);background:transparent;border-radius:10px;cursor:pointer;font:inherit;color:var(--sub)}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.count{font-size:15px}.count b{color:var(--brand);font-size:20px}
+select{padding:8px 10px;border:1px solid var(--line);border-radius:10px;font:inherit;font-size:14px;background:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;cursor:pointer;display:flex;flex-direction:column;gap:8px;transition:.15s;position:relative}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(20,48,111,.10);border-color:#c9d4f3}
+.card h4{margin:0;font-size:16px;line-height:1.35;padding-right:30px}
+.card .en{font-size:12px;color:var(--sub);margin-top:-4px}
+.card .desc{font-size:13px;color:#3b4354;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.badges{display:flex;flex-wrap:wrap;gap:5px}
+.b{font-size:11.5px;padding:3px 8px;border-radius:6px;background:#f1f0eb;color:#454c5a}
+.b.dom{background:var(--brand-soft);color:var(--brand)}
+.b.intl{background:#fde8dc;color:#c2410c}
+.b.lv1{background:var(--ok-soft);color:var(--ok)}.b.lv2{background:#e6f0ff;color:#2457c5}.b.lv3{background:var(--warn-soft);color:var(--warn)}.b.lv4{background:#fde2e2;color:#b91c1c}
+.due{font-size:12.5px;font-weight:600;padding:6px 10px;border-radius:8px;background:#f6f5f1}
+.due.hot{background:#fff1e8;color:#c2410c}.due.now{background:#ffe1d1;color:#9a2f05}
+.star{position:absolute;top:12px;right:12px;border:0;background:none;font-size:20px;cursor:pointer;color:#c9c6bc;line-height:1}
+.star.on{color:#f5a524}
+.empty{background:var(--panel);border:1px dashed var(--line);border-radius:var(--radius);padding:40px;text-align:center;color:var(--sub)}
+/* calendar */
+.cal{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:auto}
+.cal table{border-collapse:collapse;width:100%;min-width:900px;font-size:13px}
+.cal th,.cal td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:center}
+.cal th{background:#fafaf7;position:sticky;top:0;font-weight:600}
+.cal td.name{text-align:left;min-width:240px;cursor:pointer}
+.cal td.name:hover{color:var(--brand)}
+.cal .m{width:56px}
+.cell-a{background:#ffd8c2}.cell-e{background:#cfdcfb}.cell-ae{background:linear-gradient(135deg,#ffd8c2 50%,#cfdcfb 50%)}
+.legend{display:flex;gap:16px;font-size:13px;margin-bottom:10px;align-items:center;flex-wrap:wrap}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:5px}
+/* roadmap */
+.rm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.rm{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.rm h4{margin:0 0 10px}
+.rm ol{margin:0;padding-left:20px;font-size:14px}.rm li{margin:4px 0}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:16px}
+.stage h3{margin:0 0 6px}
+.timeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:12px}
+.tl{border-left:4px solid var(--brand);background:#fafaf7;border-radius:8px;padding:10px 12px;font-size:13.5px}
+.tl b{display:block;margin-bottom:4px}
+/* modal */
+.modal-bg{position:fixed;inset:0;background:rgba(15,22,40,.5);display:none;align-items:flex-start;justify-content:center;z-index:50;padding:40px 16px;overflow:auto}
+.modal-bg.open{display:flex}
+.modal{background:#fff;border-radius:18px;max-width:760px;width:100%;padding:26px;position:relative}
+.modal h2{margin:0 0 2px;font-size:22px;padding-right:40px}
+.close{position:absolute;top:16px;right:16px;border:0;background:#f1f0eb;width:34px;height:34px;border-radius:50%;font-size:18px;cursor:pointer}
+.kv{display:grid;grid-template-columns:110px 1fr;gap:6px 12px;font-size:14px;margin:16px 0}
+.kv dt{color:var(--sub)}.kv dd{margin:0}
+.sec{margin-top:18px}.sec h3{font-size:15px;margin:0 0 8px}
+.prep{list-style:none;padding:0;margin:0}
+.prep li{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:6px}
+.prep li.done{background:var(--ok-soft);border-color:#b9e2cf}
+.prep li.done span.t{text-decoration:line-through;color:var(--sub)}
+.prep input{width:18px;height:18px;margin-top:2px;accent-color:var(--ok)}
+.prep .when{font-size:12px;font-weight:700;color:var(--brand);min-width:78px}
+.progress{height:8px;background:#eee;border-radius:9px;overflow:hidden;margin-top:6px}
+.progress>div{height:100%;background:var(--ok);transition:.3s}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.btn{border:0;border-radius:10px;padding:10px 16px;font:inherit;font-size:14px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn.p{background:var(--brand);color:#fff}.btn.s{background:#f1f0eb;color:var(--ink)}
+.notice{font-size:12.5px;color:var(--warn);background:var(--warn-soft);padding:10px 12px;border-radius:10px;margin-top:14px}
+footer{text-align:center;font-size:12px;color:var(--sub);padding:20px}
+.filter-toggle{display:none}
+@media (max-width:860px){
+  main{grid-template-columns:1fr}
+  aside{position:static;max-height:none;display:none}
+  aside.show{display:block}
+  .filter-toggle{display:inline-block}
+  header h1{font-size:21px}
+  .kv{grid-template-columns:90px 1fr}
+  nav.tabs{padding:0 8px}
+  nav.tabs button{padding:12px 10px;font-size:14px}
+  main{padding:14px 12px 40px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Event<span>4</span>Students · 중고등학생 대회·캠프 탐색기</h1>
+    <p>국내외 경시대회·공모전·캠프·교류 프로그램을 학년·지역·분야·난이도·사전요구사항으로 찾고, 준비활동까지 한 번에 관리하세요.</p>
+    <div class="presets" id="presets">
+      <button data-p="all" class="on">전체 보기</button>
+      <button data-p="h1">🎓 고1 맞춤</button>
+      <button data-p="m2">📘 중2 맞춤</button>
+      <button data-p="soon">⏰ 3개월 내 접수</button>
+      <span class="note" id="today"></span>
+    </div>
+  </div>
+</header>
+<div class="tabbar">
+  <nav class="tabs" id="tabs">
+    <button data-t="list" class="on">🔎 행사 찾기</button>
+    <button data-t="cal">📅 접수 캘린더</button>
+    <button data-t="road">🧭 준비 로드맵</button>
+    <button data-t="fav">⭐ 관심 목록 <span id="favN"></span></button>
+  </nav>
+</div>
+
+<main id="main">
+  <aside id="aside">
+    <input class="search" id="q" placeholder="대회명·주최·키워드 검색">
+    <h3>학년</h3><div class="chips" data-f="grade"></div>
+    <h3>국내 / 국외</h3><div class="chips" data-f="scope"></div>
+    <h3>지역</h3><div class="chips" data-f="region"></div>
+    <h3>진행 방식</h3><div class="chips" data-f="mode"></div>
+    <h3>분야</h3><div class="chips" data-f="field"></div>
+    <h3>난이도</h3><div class="chips" data-f="level"></div>
+    <h3>사전 요구사항 <span class="mini">선택 방식 ↓</span></h3>
+    <div class="seg" id="preMode">
+      <button data-m="need" class="on">이 조건 필요한 것</button>
+      <button data-m="ex">이 조건 없는 것만</button>
+    </div>
+    <div class="chips" data-f="prereq"></div>
+    <h3>접수 시기(월)</h3><div class="chips" data-f="month"></div>
+    <button class="reset" id="reset">↺ 필터 초기화</button>
+  </aside>
+  <section id="view"></section>
+</main>
+
+<div class="modal-bg" id="mbg"><div class="modal" id="modal"></div></div>
+<footer>2026년 11월 조사 기준 · 일정은 '예년 기준'이며 해마다 바뀝니다. 지원 전 반드시 공식 공고를 확인하세요. · 다인에듀 후안샘</footer>
+
+<script src="data.js"></script>
+<script>
+const GR = {m1:"중1",m2:"중2",m3:"중3",h1:"고1",h2:"고2",h3:"고3"};
+const LV = {1:"입문",2:"중급",3:"심화",4:"최상위"};
+const PRE_DESC = {"없음":"누구나","선발시험":"선발·예선 시험","코딩능력":"코딩 능력","팀구성":"팀 구성","지도교사":"지도교사·코치","학교추천":"학교·기관 추천","작품·연구":"작품·연구물 필요","외국어능력":"영어·외국어 능력","참가비":"참가비·비용","여권":"여권·해외 이동","나이제한":"만 나이 제한","거주지":"거주지 제한"};
+const MONTHS = [1,2,3,4,5,6,7,8,9,10,11,12];
+const NOW = new Date(); const CUR = NOW.getMonth()+1;
+document.getElementById('today').textContent = `오늘 ${NOW.getFullYear()}.${CUR}.${NOW.getDate()}`;
+
+// storage (안전하게)
+const store = {
+  get(k,d){try{const v=localStorage.getItem('e4s_'+k);return v?JSON.parse(v):d}catch(e){return d}},
+  set(k,v){try{localStorage.setItem('e4s_'+k,JSON.stringify(v))}catch(e){}}
+};
+let favs = store.get('favs',[]);
+let checks = store.get('checks',{});
+
+const OPTS = {
+  grade: Object.keys(GR).map(k=>[k,GR[k]]),
+  scope: [["domestic","🇰🇷 국내"],["intl","🌏 국외"]],
+  region: [...new Set(EVENTS.map(e=>e.region))].sort().map(r=>[r,r]),
+  mode: [["온라인","온라인"],["오프라인","오프라인"],["온·오프라인","온·오프라인"]],
+  field: [...new Set(EVENTS.flatMap(e=>e.fields))].map(f=>[f,f]),
+  level: [1,2,3,4].map(l=>[String(l),LV[l]]),
+  prereq: Object.keys(PRE_DESC).map(k=>[k,PRE_DESC[k]]),
+  month: MONTHS.map(m=>[String(m),m+"월"])
+};
+const state = {grade:new Set(),scope:new Set(),region:new Set(),mode:new Set(),field:new Set(),level:new Set(),prereq:new Set(),month:new Set(),q:"",preMode:"need",sort:"due",tab:"list",soon:false};
+
+function buildChips(){
+  document.querySelectorAll('.chips[data-f]').forEach(box=>{
+    const f=box.dataset.f;
+    box.innerHTML = OPTS[f].map(([v,l])=>{
+      const n = EVENTS.filter(e=>match(e,f,new Set([v]))).length;
+      return `<button class="chip ${f==='prereq'&&state.preMode==='ex'?'ex':''} ${state[f].has(v)?'on':''}" data-v="${v}">${l} <span class="mini">${n}</span></button>`;
+    }).join('');
+    box.onclick = ev=>{
+      const b=ev.target.closest('.chip'); if(!b) return;
+      const v=b.dataset.v; state[f].has(v)?state[f].delete(v):state[f].add(v);
+      clearPreset(); render();
+    };
+  });
+}
+function match(e,f,set){
+  if(!set.size) return true;
+  switch(f){
+    case 'grade': return e.grades.some(g=>set.has(g));
+    case 'scope': return set.has(e.scope);
+    case 'region': return set.has(e.region);
+    case 'mode': return set.has(e.mode);
+    case 'field': return e.fields.some(x=>set.has(x));
+    case 'level': return set.has(String(e.level));
+    case 'month': return e.applyMonths.some(m=>set.has(String(m)));
+    case 'prereq':
+      if(state.preMode==='ex') return !e.prereq.some(p=>set.has(p));
+      return [...set].every(p=>e.prereq.includes(p));
+  }
+}
+function monthsUntil(e){ // 다음 접수까지 남은 개월 (0 = 이번 달)
+  if(!e.applyMonths.length) return 99;
+  return Math.min(...e.applyMonths.map(m=>(m-CUR+12)%12));
+}
+function filtered(){
+  const q=state.q.trim().toLowerCase();
+  let list = EVENTS.filter(e=>{
+    for(const f of ['grade','scope','region','mode','field','level','prereq','month']) if(!match(e,f,state[f])) return false;
+    if(state.soon && monthsUntil(e)>3) return false;
+    if(q){const hay=(e.name+e.en+e.host+e.desc+e.fields.join()+e.region+e.schedule).toLowerCase(); if(!hay.includes(q)) return false;}
+    return true;
+  });
+  const s=state.sort;
+  list.sort((a,b)=> s==='due'? monthsUntil(a)-monthsUntil(b) || a.level-b.level
+    : s==='lvA'? a.level-b.level : s==='lvD'? b.level-a.level : a.name.localeCompare(b.name,'ko'));
+  return list;
+}
+function dueLabel(e){
+  if(e.applyMonths.length===12) return ['상시 접수 가능','now'];
+  const d=monthsUntil(e);
+  if(d===0) return ['🔥 이번 달 접수 시기','now'];
+  if(d<=2) return [`⏰ ${d}개월 후 접수 (${(CUR+d-1)%12+1}월)`, 'hot'];
+  return [`다음 접수: ${(CUR+d-1)%12+1}월경`, ''];
+}
+function card(e,extra=''){
+  const [dl,dc]=dueLabel(e);
+  return `<div class="card" data-id="${e.id}">
+    <button class="star ${favs.includes(e.id)?'on':''}" data-star="${e.id}" title="관심 목록">★</button>
+    <h4>${e.name}</h4><div class="en">${e.en}</div>
+    <div class="badges">
+      <span class="b ${e.scope==='domestic'?'dom':'intl'}">${e.scope==='domestic'?'국내':'국외'}</span>
+      <span class="b lv${e.level}">${LV[e.level]}</span>
+      <span class="b">${e.mode}</span><span class="b">📍${e.region}</span>
+      ${e.fields.map(f=>`<span class="b">${f}</span>`).join('')}
+    </div>
+    <div class="desc">${e.desc}</div>
+    <div class="badges"><span class="b">👤 ${gradeRange(e.grades)}</span>${e.prereq.filter(p=>p!=='없음').slice(0,3).map(p=>`<span class="b">✔ ${PRE_DESC[p]}</span>`).join('')}</div>
+    <div class="due ${dc}">${dl}</div>${extra}
+  </div>`;
+}
+function gradeRange(g){ const a=Object.keys(GR); const idx=g.map(x=>a.indexOf(x)).sort((x,y)=>x-y);
+  const cont = idx.every((v,i)=>i===0||v===idx[i-1]+1);
+  return cont&&idx.length>1 ? `${GR[a[idx[0]]]}~${GR[a[idx[idx.length-1]]]}` : g.map(x=>GR[x]).join('·'); }
+
+function render(){
+  buildChips();
+  document.querySelectorAll('#preMode button').forEach(b=>b.classList.toggle('on',b.dataset.m===state.preMode));
+  document.getElementById('favN').textContent = favs.length?`(${favs.length})`:'';
+  const main=document.getElementById('main'), view=document.getElementById('view'), aside=document.getElementById('aside');
+  main.classList.toggle('full', state.tab==='road');
+  aside.style.display = state.tab==='road' ? 'none' : '';
+  if(state.tab==='list') view.innerHTML = listView();
+  else if(state.tab==='cal') view.innerHTML = calView();
+  else if(state.tab==='road') view.innerHTML = roadView();
+  else view.innerHTML = favView();
+  const sel=document.getElementById('sort'); if(sel){sel.value=state.sort; sel.onchange=()=>{state.sort=sel.value;render()}}
+  const ft=document.getElementById('ftog'); if(ft) ft.onclick=()=>aside.classList.toggle('show');
+  const rf=document.getElementById('rmField'); if(rf) rf.onchange=()=>{state.rmField=rf.value;render()};
+}
+function toolbar(n,label){
+  return `<div class="toolbar"><div class="count"><b>${n}</b>개 ${label}</div>
+  <div style="display:flex;gap:8px"><button class="btn s filter-toggle" id="ftog">필터</button>
+  <select id="sort"><option value="due">접수 임박순</option><option value="lvA">난이도 낮은순</option><option value="lvD">난이도 높은순</option><option value="name">이름순</option></select></div></div>`;
+}
+function listView(){
+  const l=filtered();
+  return toolbar(l.length,'행사') + (l.length? `<div class="grid">${l.map(e=>card(e)).join('')}</div>` : `<div class="empty">조건에 맞는 행사가 없어요. 필터를 줄여보세요.</div>`);
+}
+function calView(){
+  const l=filtered(); const order=MONTHS.map((_,i)=>(CUR-1+i)%12+1);
+  return toolbar(l.length,'행사 · 이번 달부터 12개월') + `<div class="legend"><span><i style="background:#ffd8c2"></i>접수·신청</span><span><i style="background:#cfdcfb"></i>대회·캠프 진행</span><span class="mini">행 이름을 누르면 상세·준비 체크리스트가 열립니다</span></div>
+  <div class="cal"><table><thead><tr><th style="text-align:left">행사</th>${order.map(m=>`<th class="m">${m}월${m===CUR?'<br><span class=mini>이번달</span>':''}</th>`).join('')}</tr></thead><tbody>
+  ${l.map(e=>`<tr><td class="name" data-id="${e.id}">${favs.includes(e.id)?'⭐ ':''}${e.name} <span class="mini">${LV[e.level]}</span></td>${order.map(m=>{const a=e.applyMonths.includes(m),v=e.eventMonths.includes(m);return `<td class="${a&&v?'cell-ae':a?'cell-a':v?'cell-e':''}"></td>`}).join('')}</tr>`).join('')}
+  </tbody></table></div>`;
+}
+function roadView(){
+  const fields=Object.keys(ROADMAPS); const f=state.rmField||'all';
+  const stage = `
+  <div class="stage"><h3>🎓 고1 — '집중·심화' 시기</h3>
+   <div class="mini">진로 방향이 보이기 시작하는 학년. 관심 분야 1~2개를 정해 '깊이'를 보여주는 활동을 고르세요.</div>
+   <div class="timeline">
+    <div class="tl"><b>11~1월</b>YYGS·RSI·SSP 등 여름 해외 프로그램 지원 / Conrad 2단계 / AMC 10 응시 / 겨울 전공체험 캠프 신청</div>
+    <div class="tl"><b>2~4월</b>John Locke 등록(3월 말) / KMO·올림피아드 접수 / 국가간 청소년교류·지자체 교류 모집 확인</div>
+    <div class="tl"><b>5~8월</b>올림피아드 1차 / 대산청소년문학상 / 코드페어 접수 / 여름 캠프·교류 참가</div>
+    <div class="tl"><b>9~10월</b>고교 AI·SW 공모전 / 경제한마당 / 다음 해 연구 주제 확정 (과학전람회·ISEF 준비 시작)</div>
+   </div></div>
+  <div class="stage"><h3>📘 중2 — '탐색·기초' 시기</h3>
+   <div class="mini">※ 3월 새 학년부터는 한 학년 올라가니 대상 학년·만 나이 기준을 함께 확인하세요.<br>여러 분야를 가볍게 경험하며 흥미를 찾는 학년. 입문·중급 대회와 캠프로 '첫 성공 경험'을 만드세요.</div>
+   <div class="timeline">
+    <div class="tl"><b>11~1월</b>대학부설 영재교육원 선발 / 겨울 우주캠프 / AMC 8(1월) / USACO Bronze 도전</div>
+    <div class="tl"><b>3~6월</b>KJSO(4~6월 접수)는 '만 15세 이하' 기준이라 출생연도 확인 필수 / 청소년 발명아이디어 경진대회 / 성취포상제 동장 시작</div>
+    <div class="tl"><b>7~8월</b>여름 캠프·봉사 / 코드페어·WRO 등 팀 대회 경험</div>
+    <div class="tl"><b>9~10월</b>World Scholar's Cup 주니어 준비 / 모의유엔 입문 / 중3·고교 대비 관심 분야 좁히기</div>
+   </div></div>`;
+  const cards = fields.filter(x=>f==='all'||x===f).map(x=>{
+    const n = EVENTS.filter(e=>e.fields.includes(x)).length;
+    return `<div class="rm"><h4>${x} <span class="mini">관련 행사 ${n}개</span></h4><ol>${ROADMAPS[x].map(s=>`<li>${s}</li>`).join('')}</ol>
+    <button class="btn s" style="margin-top:10px;font-size:13px" data-gofield="${x}">이 분야 행사 보기 →</button></div>`}).join('');
+  return `${stage}<div class="toolbar"><div class="count">분야별 공통 준비활동</div>
+   <select id="rmField"><option value="all">전체 분야</option>${fields.map(x=>`<option ${x===f?'selected':''}>${x}</option>`).join('')}</select></div>
+   <div class="rm-grid">${cards}</div>`;
+}
+function favView(){
+  const l=EVENTS.filter(e=>favs.includes(e.id));
+  if(!l.length) return `<div class="empty">아직 관심 행사가 없어요. 카드의 ★를 눌러 추가하세요.</div>`;
+  return `<div class="toolbar"><div class="count"><b>${l.length}</b>개 관심 행사 · 준비 진행률</div></div><div class="grid">${l.map(e=>{
+    const c=checks[e.id]||[]; const pct=Math.round(c.filter(Boolean).length/e.prep.length*100);
+    return card(e,`<div><div class="mini">준비활동 ${c.filter(Boolean).length}/${e.prep.length}</div><div class="progress"><div style="width:${pct}%"></div></div></div>`);
+  }).join('')}</div>`;
+}
+function openModal(id){
+  const e=EVENTS.find(x=>x.id===id); if(!e) return;
+  const c=checks[e.id]||[];
+  const link = e.url || `https://www.google.com/search?q=${encodeURIComponent(e.name.replace(/\(.*?\)/g,'')+' 2027 공고')}`;
+  document.getElementById('modal').innerHTML = `
+   <button class="close" id="mclose">✕</button>
+   <h2>${e.name}</h2><div class="mini">${e.en}</div>
+   <div class="badges" style="margin-top:10px"><span class="b ${e.scope==='domestic'?'dom':'intl'}">${e.scope==='domestic'?'국내':'국외'}</span><span class="b lv${e.level}">난이도 · ${LV[e.level]}</span>${e.fields.map(f=>`<span class="b">${f}</span>`).join('')}</div>
+   <p style="margin:14px 0 0">${e.desc}</p>
+   <dl class="kv">
+    <dt>주최·주관</dt><dd>${e.host}</dd>
+    <dt>대상 학년</dt><dd>${e.grades.map(g=>GR[g]).join(', ')}</dd>
+    <dt>지역·방식</dt><dd>${e.region} · ${e.mode}</dd>
+    <dt>일정</dt><dd>${e.schedule}</dd>
+    <dt>접수 시기</dt><dd>${e.applyMonths.length===12?'상시':e.applyMonths.map(m=>m+'월').join(', ')}</dd>
+    <dt>비용</dt><dd>${e.cost}</dd>
+    <dt>사전 요구</dt><dd>${e.prereq.map(p=>PRE_DESC[p]).join(' · ')}</dd>
+    <dt>다음 단계</dt><dd>${e.next}</dd>
+   </dl>
+   <div class="sec"><h3>✅ 준비활동 체크리스트 <span class="mini" id="pc"></span></h3>
+    <div class="progress" style="margin-bottom:10px"><div id="pbar"></div></div>
+    <ul class="prep">${e.prep.map((p,i)=>`<li class="${c[i]?'done':''}"><input type="checkbox" data-i="${i}" ${c[i]?'checked':''}><span class="when">${p.when}</span><span class="t">${p.task}</span></li>`).join('')}</ul>
+   </div>
+   <div class="notice">⚠️ 일정·자격은 예년 기준입니다. 지원 전 공식 공고에서 올해 요강을 꼭 확인하세요.</div>
+   <div class="actions">
+    <a class="btn p" href="${link}" target="_blank" rel="noopener">${e.url?'공식 사이트 열기 ↗':'최신 공고 검색 ↗'}</a>
+    <button class="btn s" id="mfav">${favs.includes(e.id)?'★ 관심 해제':'☆ 관심 목록 추가'}</button>
+   </div>`;
+  const upd=()=>{const cc=checks[e.id]||[];const n=cc.filter(Boolean).length;document.getElementById('pc').textContent=`${n}/${e.prep.length}`;document.getElementById('pbar').style.width=(n/e.prep.length*100)+'%'};
+  upd();
+  document.querySelectorAll('#modal .prep input').forEach(cb=>cb.onchange=()=>{
+    const arr=checks[e.id]||[]; arr[+cb.dataset.i]=cb.checked; checks[e.id]=arr; store.set('checks',checks);
+    cb.closest('li').classList.toggle('done',cb.checked); upd();
+  });
+  document.getElementById('mfav').onclick=()=>{toggleFav(e.id);openModal(e.id)};
+  document.getElementById('mclose').onclick=closeModal;
+  document.getElementById('mbg').classList.add('open');
+}
+function closeModal(){document.getElementById('mbg').classList.remove('open');render()}
+function toggleFav(id){favs=favs.includes(id)?favs.filter(x=>x!==id):[...favs,id];store.set('favs',favs)}
+function clearPreset(){document.querySelectorAll('#presets button').forEach(b=>b.classList.remove('on'))}
+
+document.getElementById('mbg').onclick=e=>{if(e.target.id==='mbg')closeModal()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+document.getElementById('view').onclick=ev=>{
+  const s=ev.target.closest('[data-star]'); if(s){ev.stopPropagation();toggleFav(s.dataset.star);render();return}
+  const g=ev.target.closest('[data-gofield]'); if(g){resetState();state.field.add(g.dataset.gofield);setTab('list');return}
+  const c=ev.target.closest('[data-id]'); if(c) openModal(c.dataset.id);
+};
+document.getElementById('q').oninput=e=>{state.q=e.target.value;render()};
+document.getElementById('preMode').onclick=e=>{const b=e.target.closest('button');if(b){state.preMode=b.dataset.m;render()}};
+function resetState(){['grade','scope','region','mode','field','level','prereq','month'].forEach(k=>state[k].clear());state.q='';state.soon=false;document.getElementById('q').value=''}
+document.getElementById('reset').onclick=()=>{resetState();clearPreset();document.querySelector('[data-p=all]').classList.add('on');render()};
+document.getElementById('presets').onclick=e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  resetState(); clearPreset(); b.classList.add('on');
+  if(b.dataset.p==='h1') state.grade.add('h1');
+  if(b.dataset.p==='m2') state.grade.add('m2');
+  if(b.dataset.p==='soon') state.soon=true;
+  if(state.tab==='road'||state.tab==='fav') state.tab='list';
+  setTab(state.tab);
+};
+function setTab(t){state.tab=t;document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));render();window.scrollTo({top:0,behavior:'smooth'})}
+document.getElementById('tabs').onclick=e=>{const b=e.target.closest('button');if(b)setTab(b.dataset.t)};
+render();
+</script>
+</body>
+</html>
